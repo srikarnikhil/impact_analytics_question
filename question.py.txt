@@ -1,0 +1,16 @@
+from itertools import permutations
+n=int(input('Enter no of days: ')) # no of days
+c=0 # to store count of cases where i miss 4 or more than 4 classes consequtively
+nu=0 # to store count of cases in which i am absent on last day (i.e. nth day where i miss the graduation cermony) even if i am allowed to attend the graduation , i.e. not absent for 4 or more than 4 classes consequtively
+for i in range(n+1):
+    st='A'*i+'P'*(n-i) # A stands for absent and Pstands for present
+    l=[] # to store all possible ways (permutations)
+    for j in set(permutations(st)): # generating all possible unique ways (permutations) for i number of days absent and n-i number days present 
+        l.append("".join(list(j))) # storing it in string format as permutations generate tuple which is not much useful 
+    for j in l:
+        if "AAAA" in j: # checking if 4 or more than 4 classes absent consequtely 
+            c+=1        
+        elif j[-1]=="A": # checking if i am absent on last day if i am allowed (if i am not allowed it will go to if condition above)
+            nu+=1
+de=2**n-c # total possible ways of present and absent in n days is pow(2,n) , so No of ways in which i am allowed(question 1) for attending graduation cermony is = total-not allowed cases
+print(str(nu)+"/"+str(de)) # probability = (no of ways that i miss the graduation cermony)/ (no of ways to attend the classes over N days)
